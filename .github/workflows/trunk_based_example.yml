@@ -4,7 +4,8 @@ name: CI
 on: [push]
 
 jobs:
-  build:
+  development_evironment:
+    name: Development
     runs-on: ubuntu-latest    
     steps:
     # Clone of the code
