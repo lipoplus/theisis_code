@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1  
     - uses: cardinalby/export-env-action@v1
       with:
-        envFile: '${GITHUB_WORKSPACE}/env/development/config.env'    
+        envFile: './env/development/config.env'    
         expand: 'true'  
     - name: Linting
       run: echo Linting code.
