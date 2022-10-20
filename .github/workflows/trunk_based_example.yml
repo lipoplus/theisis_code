@@ -9,6 +9,8 @@ jobs:
     steps:
     # Clone of the code
     - uses: actions/checkout@v1 
+    - name: Load Feature Toogles
+      run: source ${GITHUB_WORKSPACE}/development/config.env
     - name: Linting
       run: echo Linting code.
     - name: Build 
@@ -17,6 +19,15 @@ jobs:
       run: echo Run Unit testing
     - name: Run Code
       run: echo Coding is running
+    - uses: actions/setup-python@v2
+    - uses: jannekem/run-python-script-action@v1
+      with:
+       script: |
+          import os
+          if os.environ.get('FEATURE1'):
+              print("Running FEATURE1")
+          if os.environ.get('FEATURE2'):
+              print("Running FEATURE1")     
   deployment_integration:
     needs: build
     runs-on: ubuntu-latest
