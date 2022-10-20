@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
     # Clone of the code
-    - uses: actions/checkout@v1  
+    - uses: actions/checkout@v1
+      name: Clone code  
     - uses: cardinalby/export-env-action@v1
       name: Load Feature toogles
       with:
@@ -42,6 +43,8 @@ jobs:
     needs: deployment_integration
     runs-on: ubuntu-latest    
     steps:
+    - uses: actions/checkout@v1
+      name: Clone code 
     - uses: cardinalby/export-env-action@v1
       name: Load Feature toogles
       with:
