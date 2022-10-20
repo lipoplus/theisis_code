@@ -26,9 +26,9 @@ jobs:
       with:
        script: |
           import os
-          if os.environ.get('FEATURE1') == True:
+          if os.environ.get('FEATURE1'):
               print(os.environ.get('FEATURE1'))
-          if os.environ.get('FEATURE2') == True:
+          if os.environ.get('FEATURE2'):
               print("Running FEATURE2")     
   deployment_integration:
     needs: build
