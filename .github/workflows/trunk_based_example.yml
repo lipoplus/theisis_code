@@ -135,7 +135,7 @@ jobs:
     - name: Functional Testing
       run: echo Run Functinal Testing
   release:
-      name: Release in Production Staging
+      name: Release in Production
       needs: staging_enviroment
       runs-on: ubuntu-latest
       environment: 
