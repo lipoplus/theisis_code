@@ -10,18 +10,16 @@ jobs:
     # Clone of the code
     - uses: actions/checkout@v1  
     - uses: cardinalby/export-env-action@v1
+      name: Load Feature toogles
       with:
         envFile: './env/development/config.env'    
         expand: 'true'  
     - name: Linting
       run: echo Linting code.
-    - name: Build 
-      run: echo Building code
+    - uses: actions/setup-python@v2
+      name : Build
     - name: Unit Testing
       run: echo Run Unit testing
-    - name: Run Code
-      run: echo Coding is running
-    - uses: actions/setup-python@v2
     - uses: jannekem/run-python-script-action@v1
       name : Run Code
       with:
@@ -44,8 +42,15 @@ jobs:
     needs: deployment_integration
     runs-on: ubuntu-latest    
     steps:
-    - name: Run Code
-      run: echo Run Unit testing
+    - uses: jannekem/run-python-script-action@v1
+      name : Run Code
+      with:
+       script: |
+          import os
+          if os.environ.get('FEATURE1') == "True":
+              print(os.environ.get('FEATURE1'))
+          if os.environ.get('FEATURE2') == "True":
+              print("Running FEATURE2") 
     - name: Integration Testing
       run: echo Run Unit testing  
   deployment_testing:
