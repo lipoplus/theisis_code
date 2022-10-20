@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest    
     steps:
     # Clone of the code
-    - uses: actions/checkout@v1 
-    - name: Load Feature Toogles
-      run: source ${GITHUB_WORKSPACE}/env/development/config.env
+    - uses: actions/checkout@v1  
+    - uses: cardinalby/export-env-action@v1
+      with:
+        envFile: '${GITHUB_WORKSPACE}/env/development/config.env'    
+        expand: 'true'  
     - name: Linting
       run: echo Linting code.
     - name: Build 
