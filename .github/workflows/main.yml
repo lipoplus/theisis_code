@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: deploy
         run: echo Coding is deployed 
-   testing_enviroment:
+  testing_enviroment:
     needs: deployment_testing
     runs-on: ubuntu-latest    
     steps:
@@ -53,7 +53,7 @@ jobs:
       run: echo Run Non-Functinal Testing
     - name: Functional Testing
       run: echo Run Functinal Testing
-   deployment_staging:
+  deployment_staging:
     needs: testing_enviroment
     runs-on: ubuntu-latest
     environment: 
@@ -62,7 +62,7 @@ jobs:
     steps:
       - name: deploy
         run: echo Coding is deployed   
-    staging_enviroment:
+  staging_enviroment:
     needs: deployment_staging
     runs-on: ubuntu-latest    
     steps:
@@ -72,7 +72,7 @@ jobs:
       run: echo Run Non-Functinal Testing
     - name: Functional Testing
       run: echo Run Functinal Testing
-    release:
+  release:
       needs: staging_enviroment
       runs-on: ubuntu-latest
       environment: 
