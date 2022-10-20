@@ -32,7 +32,7 @@ jobs:
           if os.environ.get('FEATURE2') == "True":
               print("Running FEATURE2")     
   deployment_integration:
-    needs: build
+    needs: development_evironment
     runs-on: ubuntu-latest
     environment: 
       name: production
