@@ -18,11 +18,11 @@ jobs:
     - name: Run Code
       run: echo Coding is runnig
   deployment:
+    needs: build
     runs-on: ubuntu-latest
     environment: 
       name: production
       url: https://github.com
     steps:
-      - uses: actions/checkout@v1 
       - name: deploy
-        run: echo Coding is runnig
+        run: echo Coding is deployed
