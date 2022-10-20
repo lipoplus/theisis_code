@@ -10,7 +10,7 @@ jobs:
     # Clone of the code
     - uses: actions/checkout@v1 
     - name: Load Feature Toogles
-      run: source ${GITHUB_WORKSPACE}/development/config.env
+      run: source ${GITHUB_WORKSPACE}/env/development/config.env
     - name: Linting
       run: echo Linting code.
     - name: Build 
