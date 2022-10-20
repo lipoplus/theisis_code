@@ -16,13 +16,68 @@ jobs:
     - name: Unit Testing
       run: echo Run Unit testing
     - name: Run Code
-      run: echo Coding is runnig
-  deployment:
+      run: echo Coding is running
+  deployment_integration:
     needs: build
     runs-on: ubuntu-latest
     environment: 
       name: production
       url: https://github.com
     steps:
-      - name: deploy
+      - name: Deploy in Integration
         run: echo Coding is deployed
+  integration_enviroment:
+    needs: deployment_integration
+    runs-on: ubuntu-latest    
+    steps:
+    - name: Run Code
+      run: echo Run Unit testing
+    - name: Integration Testing
+      run: echo Run Unit testing  
+  deployment_testing:
+    needs: integration_enviroment
+    runs-on: ubuntu-latest
+    environment: 
+      name: integration
+      url: https://github.com
+    steps:
+      - name: deploy
+        run: echo Coding is deployed 
+   testing_enviroment:
+    needs: deployment_testing
+    runs-on: ubuntu-latest    
+    steps:
+    - name: Run Code
+      run: echo Coding is running
+    - name: Non-Functional Testing
+      run: echo Run Non-Functinal Testing
+    - name: Functional Testing
+      run: echo Run Functinal Testing
+   deployment_staging:
+    needs: testing_enviroment
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: https://github.com
+    steps:
+      - name: deploy
+        run: echo Coding is deployed   
+    staging_enviroment:
+    needs: deployment_staging
+    runs-on: ubuntu-latest    
+    steps:
+    - name: Run Code
+      run: echo Coding is running
+    - name: Non-Functional Testing
+      run: echo Run Non-Functinal Testing
+    - name: Functional Testing
+      run: echo Run Functinal Testing
+    release:
+      needs: staging_enviroment
+      runs-on: ubuntu-latest
+      environment: 
+        name: Prodution 
+        url: https://github.com
+      steps:
+        - name: deploy
+          run: echo Coding is deployed
