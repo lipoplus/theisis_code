@@ -10,7 +10,7 @@ jobs:
     # Clone of the code
     - uses: actions/checkout@v1 
     - name: Linting
-      run: echo Linting code
+      run: echo Linting code.
     - name: Build 
       run: echo Building code
     - name: Unit Testing
