@@ -25,4 +25,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1 
       - name: deploy
-        # ...deployment-specific steps
+        run: echo Coding is runnig
