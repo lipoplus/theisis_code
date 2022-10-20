@@ -1,11 +1,11 @@
 
-name: CI
+name: CI/CD
 
 on: [push]
 
 jobs:
   development_evironment:
-    name: Development
+    name: Development Enviroment
     runs-on: ubuntu-latest    
     steps:
     # Clone of the code
@@ -32,6 +32,7 @@ jobs:
           if os.environ.get('FEATURE2') == "True":
               print("Running FEATURE2")     
   deployment_integration:
+    name: Deploy in Integration Environment
     needs: development_evironment
     runs-on: ubuntu-latest
     environment: 
@@ -41,6 +42,7 @@ jobs:
       - name: Deploy in Integration
         run: echo Coding is deployed
   integration_enviroment:
+    name: Integration Environment
     needs: deployment_integration
     runs-on: ubuntu-latest    
     steps:
@@ -63,6 +65,7 @@ jobs:
     - name: Integration Testing
       run: echo Run Unit testing  
   deployment_testing:
+    name: Deploy in Testing Environment
     needs: integration_enviroment
     runs-on: ubuntu-latest
     environment: 
@@ -72,6 +75,7 @@ jobs:
       - name: deploy
         run: echo Coding is deployed 
   testing_enviroment:
+    name: Testing Environment
     needs: deployment_testing
     runs-on: ubuntu-latest    
     steps:
@@ -96,6 +100,7 @@ jobs:
     - name: Functional Testing
       run: echo Run Functinal Testing
   deployment_staging:
+    name: Deploy in Staging Environment
     needs: testing_enviroment
     runs-on: ubuntu-latest
     environment: 
@@ -105,6 +110,7 @@ jobs:
       - name: deploy
         run: echo Coding is deployed   
   staging_enviroment:
+    name: Staging Environment
     needs: deployment_staging
     runs-on: ubuntu-latest    
     steps:
@@ -129,11 +135,12 @@ jobs:
     - name: Functional Testing
       run: echo Run Functinal Testing
   release:
+      name: Release in Production Staging
       needs: staging_enviroment
       runs-on: ubuntu-latest
       environment: 
         name: Prodution 
         url: https://github.com
       steps:
-        - name: deploy
+        - name: Run Code in Production
           run: echo Coding is deployed
