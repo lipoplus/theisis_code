@@ -36,7 +36,7 @@ jobs:
     needs: development_evironment
     runs-on: ubuntu-latest
     environment: 
-      name: production
+      name: integration
       url: https://github.com
     steps:
       - name: Deploy in Integration
@@ -69,7 +69,7 @@ jobs:
     needs: integration_enviroment
     runs-on: ubuntu-latest
     environment: 
-      name: integration
+      name: testing
       url: https://github.com
     steps:
       - name: deploy
