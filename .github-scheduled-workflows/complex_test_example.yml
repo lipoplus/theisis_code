@@ -14,8 +14,6 @@ jobs:
       steps:
         - uses: actions/checkout@v2
           with:
-            ref: ${{ env.DELAYED_JOB_CHECKOUT_REF }} # SHA that triggered your original job
-        - name: Do some work
-          run: echo $GITHUB_SHA
+            ref: ${{ env.DELAYED_JOB_WORKFLOW_UNSCHEDULE_TARGET_BRANCH }} # SHA that triggered your original job
         - name: Running Complex tests
           run: echo Test are running     
