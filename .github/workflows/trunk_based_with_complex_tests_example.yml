@@ -65,6 +65,8 @@ jobs:
     - name: Integration Testing
       run: echo Run Unit testing  
   complex_tests:
+    name: Run Complex Tests
+    steps:
     - uses: cardinalby/schedule-job-action@v1
       with:
         ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
