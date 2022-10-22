@@ -67,10 +67,13 @@ jobs:
   complex_tests:
     name: Run Complex Tests
     runs-on: ubuntu-latest
+    environment: 
+      name: integration
+      url: https://github.com
     steps:
     - uses: cardinalby/schedule-job-action@v1
       with:
-        ghToken: ${{ secrets.GITHUB_TOKEN }}
+        ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
         templateYmlFile: '.github-scheduled-workflows/complex_test_example.yml'
   deployment_testing:
     name: Deploy in Testing Environment
