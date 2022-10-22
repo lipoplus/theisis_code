@@ -68,7 +68,7 @@ jobs:
     - uses: cardinalby/schedule-job-action@v1
       with:
         ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
-        templateYmlFile: '.github-scheduled-workflows/complex_test_example.yml'
+        templateYmlFile: './.github-scheduled-workflows/complex_test_example.yml'
   deployment_testing:
     name: Deploy in Testing Environment
     needs: [integration_enviroment,complex_tests]
