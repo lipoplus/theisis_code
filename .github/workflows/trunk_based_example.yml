@@ -95,7 +95,7 @@ jobs:
           import os
           # If the Feature Toogle represented by "Feature1" is enable  will print the text inside the function print() 
           if os.environ.get('FEATURE1') == "True":
-              print("Running FEATURE1"))
+              print("Running FEATURE1")
           # If the Feature Toogle represented by "Feature2" is enable will print the text inside the function print()    
           if os.environ.get('FEATURE2') == "True":
               print("Running FEATURE2") 
