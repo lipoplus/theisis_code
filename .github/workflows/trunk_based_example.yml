@@ -30,7 +30,7 @@ jobs:
           if os.environ.get('FEATURE1') == "True":
               print(os.environ.get('FEATURE1'))
           if os.environ.get('FEATURE2') == "True":
-              print("Running FEATURE2")     
+              print("Running FEATURE2 a")     
   deployment_integration:
     name: Deploy in Integration Environment
     needs: development_evironment
