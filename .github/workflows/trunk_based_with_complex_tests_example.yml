@@ -1,0 +1,155 @@
+
+name: CI/CD With Complex Tests
+
+on: [push]
+
+jobs:
+  development_evironment:
+    name: Development Enviroment
+    runs-on: ubuntu-latest    
+    steps:
+    # Clone of the code
+    - uses: actions/checkout@v1
+      name: Clone code  
+    - uses: cardinalby/export-env-action@v1
+      name: Load Feature toogles
+      with:
+        envFile: './env/development/config.env'    
+        expand: 'true'  
+    - name: Linting
+      run: echo Linting code.
+    - uses: actions/setup-python@v2
+      name : Build
+    - name: Unit Testing
+      run: echo Run Unit testing
+    - uses: jannekem/run-python-script-action@v1
+      name : Run Code
+      with:
+       script: |
+          import os
+          if os.environ.get('FEATURE1') == "True":
+              print(os.environ.get('FEATURE1'))
+          if os.environ.get('FEATURE2') == "True":
+              print("Running FEATURE2 a")     
+  deployment_integration:
+    name: Deploy in Integration Environment
+    needs: development_evironment
+    runs-on: ubuntu-latest
+    environment: 
+      name: integration
+      url: https://github.com
+    steps:
+      - name: Deploy in Integration
+        run: echo Coding is deployed
+  integration_enviroment:
+    name: Integration Environment
+    needs: deployment_integration
+    runs-on: ubuntu-latest    
+    steps:
+    - uses: actions/checkout@v1
+      name: Clone code 
+    - uses: cardinalby/export-env-action@v1
+      name: Load Feature toogles
+      with:
+        envFile: './env/integration/config.env'    
+        expand: 'true'  
+    - uses: jannekem/run-python-script-action@v1
+      name : Run Code
+      with:
+       script: |
+          import os
+          if os.environ.get('FEATURE1') == "True":
+              print(os.environ.get('FEATURE1'))
+          if os.environ.get('FEATURE2') == "True":
+              print("Running FEATURE2") 
+    - name: Integration Testing
+      run: echo Run Unit testing  
+  complex_tests:
+   - uses: cardinalby/schedule-job-action@v1
+     with:
+        ghToken: ${{ secrets.WORKFLOWS_TOKEN }}
+        templateYmlFile: '.github-scheduled-workflows/complex_test_example.yml'
+  deployment_testing:
+    name: Deploy in Testing Environment
+    needs: [integration_enviroment,complex_tests]
+    runs-on: ubuntu-latest
+    environment: 
+      name: testing
+      url: https://github.com
+    steps:
+      - name: deploy
+        run: echo Coding is deployed 
+  testing_enviroment:
+    name: Testing Environment
+    needs: deployment_testing
+    runs-on: ubuntu-latest    
+    steps:
+    - uses: actions/checkout@v1
+      name: Clone code 
+    - uses: cardinalby/export-env-action@v1
+      name: Load Feature toogles
+      with:
+        # Will need to set for each environment the path for the config-env containing all the feature toogles with the key-value definitions 
+        envFile: './env/testing/config.env'    
+        expand: 'true'  
+    - uses: jannekem/run-python-script-action@v1
+      name : Run Code
+      with:
+       script: |
+          # Import the os libary to be able to use the Enviroment Varibles
+          import os
+          # If the Feature Toogle represented by "Feature1" is enable  will print the text inside the function print() 
+          if os.environ.get('FEATURE1') == "True":
+              print("Running FEATURE1")
+          # If the Feature Toogle represented by "Feature2" is enable will print the text inside the function print()    
+          if os.environ.get('FEATURE2') == "True":
+              print("Running FEATURE2") 
+    - name: Non-Functional Testing
+      run: echo Run Non-Functinal Testing
+    - name: Functional Testing
+      run: echo Run Functinal Testing
+  deployment_staging:
+    name: Deploy in Staging Environment
+    needs: testing_enviroment
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: https://github.com
+    steps:
+      - name: deploy
+        run: echo Coding is deployed   
+  staging_enviroment:
+    name: Staging Environment
+    needs: deployment_staging
+    runs-on: ubuntu-latest    
+    steps:
+    - uses: actions/checkout@v1
+      name: Clone code 
+    - uses: cardinalby/export-env-action@v1
+      name: Load Feature toogles
+      with:
+        envFile: './env/staging/config.env'    
+        expand: 'true'  
+    - uses: jannekem/run-python-script-action@v1
+      name : Run Code
+      with:
+       script: |
+          import os
+          if os.environ.get('FEATURE1') == "True":
+              print(os.environ.get('FEATURE1'))
+          if os.environ.get('FEATURE2') == "True":
+              print("Running FEATURE2") 
+    - name: Non-Functional Testing
+      run: echo Run Non-Functinal Testing
+    - name: Functional Testing
+      run: echo Run Functinal Testing
+  release:
+      name: Release in Production
+      needs: staging_enviroment
+      runs-on: ubuntu-latest
+      environment: 
+        name: Prodution 
+        url: https://github.com
+      steps:
+        - name: Run Code in Production
+          run: echo Coding is deployed
