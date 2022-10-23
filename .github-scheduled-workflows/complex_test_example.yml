@@ -2,8 +2,9 @@
 name: CI/CD With Complex Tests
 
 on:
+# Is this example the piepline runs  every 15th minute, but this value can be changed
   schedule:
-    - cron:  '*/15 * * * *'    # At every 15th minute
+    - cron:  '*/15 * * * *'    
 
 jobs:
   name: Run Complex Tests
