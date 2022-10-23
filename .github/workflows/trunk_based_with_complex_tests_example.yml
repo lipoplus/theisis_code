@@ -7,6 +7,9 @@ jobs:
   development_evironment:
     name: Development Enviroment
     runs-on: ubuntu-latest    
+    environment: 
+      name: development
+      url: https://github.com
     steps:
     # Clone of the code
     - uses: actions/checkout@v1
@@ -45,6 +48,9 @@ jobs:
     name: Integration Environment
     needs: deployment_integration
     runs-on: ubuntu-latest    
+    environment: 
+      name: integration
+      url: https://github.com
     steps:
     - uses: actions/checkout@v1
       name: Clone code 
@@ -90,6 +96,9 @@ jobs:
   testing_enviroment:
     name: Testing Environment
     needs: deployment_testing
+    environment: 
+      name: testing
+      url: https://github.com
     runs-on: ubuntu-latest    
     steps:
     - uses: actions/checkout@v1
@@ -129,6 +138,9 @@ jobs:
   staging_enviroment:
     name: Staging Environment
     needs: deployment_staging
+    environment: 
+      name: staging
+      url: https://github.com
     runs-on: ubuntu-latest    
     steps:
     - uses: actions/checkout@v1
@@ -156,7 +168,7 @@ jobs:
       needs: staging_enviroment
       runs-on: ubuntu-latest
       environment: 
-        name: Prodution 
+        name: prodution 
         url: https://github.com
       steps:
         - name: Run Code in Production
